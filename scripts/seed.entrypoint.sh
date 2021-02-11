@@ -1,0 +1,1 @@
+dotnet Plutonium.Migrator.dll execute "sql/seed.sql" $CONNSTR

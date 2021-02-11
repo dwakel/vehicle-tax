@@ -1,0 +1,1 @@
+dotnet Plutonium.Migrator.dll apply migrations $CONNSTR
