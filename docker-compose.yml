@@ -1,6 +1,16 @@
 version: "3"
 
 services:
+
+# app:
+#     build:
+#       context: .
+#       dockerfile: VehicleTax/Dockerfile
+#     restart: always
+#     ports:
+#       - "3000:3000"
+#     depends_on:
+#       - pg
   pg:
     image: postgres:12
     restart: always

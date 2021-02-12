@@ -14,7 +14,7 @@ ACT 891 CUSTOMS ACT, 2015
 Extract zip into Default bash directory.
 In a separate terminal window (2 terminals) RUN the following commads:
 
-#### Terminal 1: Human resource application
+#### Terminal
 ``` Bash
 cd vehicle-tax
 
@@ -64,4 +64,5 @@ sh scripts/start.sh
 #### Point to note
 Make sure application are run in the specified ports in the launch.json file
 - The application should be run using kestrel
+- To build Main App from doccker compose, uncomment configurations in docker-compose.yml file
 
