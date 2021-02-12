@@ -5,7 +5,7 @@ namespace VehicleTax.ViewModels
     {
         public Dictionary<string, object> SearchBy { get; set; }
         public Dictionary<string, object> SortBy { get; set; }
-        public int Page { get; }
-        public int PerPage { get; }
+        public int Page { get; set; }
+        public int PerPage { get; set; }
     }
 }

@@ -263,59 +263,59 @@ namespace VehicleTax.Domain
                         
                         if (filter.Key.ToLower() == "importduty")
                         {
-                            searchBy = $"{searchBy} AND a.import_duty = {Convert.ToInt64(filter.Value)}";
+                            searchBy = $"{searchBy} AND a.import_duty = {Convert.ToDouble(filter.Value.ToString())}";
                         }
                         if (filter.Key.ToLower() == "vat")
                         {
-                            searchBy = $"{searchBy} AND a.vat = {Convert.ToInt64(filter.Value)}";
+                            searchBy = $"{searchBy} AND a.vat = {Convert.ToDouble(filter.Value.ToString())}";
                         }
                         if (filter.Key.ToLower() == "nhil")
                         {
-                            searchBy = $"{searchBy} AND a.nhil = {Convert.ToInt64(filter.Value)}";
+                            searchBy = $"{searchBy} AND a.nhil = {Convert.ToDouble(filter.Value.ToString())}";
                         }
                         if (filter.Key.ToLower() == "getfundlevy")
                         {
-                            searchBy = $"{searchBy} AND a.getfund_levy = {Convert.ToInt64(filter.Value)}";
+                            searchBy = $"{searchBy} AND a.getfund_levy = {Convert.ToDouble(filter.Value.ToString())}";
                         }
                         if (filter.Key.ToLower() == "aulevy")
                         {
-                            searchBy = $"{searchBy} AND a.au_levy = {Convert.ToInt64(filter.Value)}";
+                            searchBy = $"{searchBy} AND a.au_levy = {Convert.ToDouble(filter.Value.ToString())}";
                         }
                         if (filter.Key.ToLower() == "ecowaslevy")
                         {
-                            searchBy = $"{searchBy} AND a.ecowas_levy = {Convert.ToInt64(filter.Value)}";
+                            searchBy = $"{searchBy} AND a.ecowas_levy = {Convert.ToDouble(filter.Value.ToString())}";
                         }
                         if (filter.Key.ToLower() == "eximlevy")
                         {
-                            searchBy = $"{searchBy} AND a.exim_levy = {Convert.ToInt64(filter.Value)}";
+                            searchBy = $"{searchBy} AND a.exim_levy = {Convert.ToDouble(filter.Value.ToString())}";
                         }
                         if (filter.Key.ToLower() == "examlevy")
                         {
-                            searchBy = $"{searchBy} AND a.exam_levy = {Convert.ToInt64(filter.Value)}";
+                            searchBy = $"{searchBy} AND a.exam_levy = {Convert.ToDouble(filter.Value.ToString())}";
                         }
                         if (filter.Key.ToLower() == "processingfee")
                         {
-                            searchBy = $"{searchBy} AND a.processing_fee = {Convert.ToInt64(filter.Value)}";
+                            searchBy = $"{searchBy} AND a.processing_fee = {Convert.ToDouble(filter.Value.ToString())}";
                         }
-                        if (filter.Key.ToLower() == "special_import_levy")
+                        if (filter.Key.ToLower() == "specialimportlevy")
                         {
-                            searchBy = $"{searchBy} AND a.import_duty = {Convert.ToInt64(filter.Value)}";
+                            searchBy = $"{searchBy} AND a.special_import_levy = {Convert.ToDouble(filter.Value.ToString())}";
                         }
                         if (filter.Key.ToLower() == "categoryname")
                         {
-                            searchBy = $"{searchBy} AND c.short_name =  '%{filter.Value.ToString().ToLower()}%'";
+                            searchBy = $"{searchBy} AND LOWER(c.short_name) LIKE '%{filter.Value.ToString().ToLower()}%'";
                         }
                         if (filter.Key.ToLower() == "categorydescription")
                         {
-                            searchBy = $"{searchBy} AND c.description =  '%{filter.Value.ToString().ToLower()}%'";
+                            searchBy = $"{searchBy} AND LOWER(c.description) LIKE '%{filter.Value.ToString().ToLower()}%'";
                         }
                         if (filter.Key.ToLower() == "typename")
                         {
-                            searchBy = $"{searchBy} AND b.short_name =  '%{filter.Value.ToString().ToLower()}%'";
+                            searchBy = $"{searchBy} AND LOWER(b.short_name) LIKE '%{filter.Value.ToString().ToLower()}%'";
                         }
                         if (filter.Key.ToLower() == "typedescription")
                         {
-                            searchBy = $"{searchBy} AND b.description =  '%{filter.Value.ToString().ToLower()}%'";
+                            searchBy = $"{searchBy} AND LOWER(b.description) LIKE '%{filter.Value.ToString().ToLower()}%'";
                         }
 
                     }
@@ -329,6 +329,7 @@ namespace VehicleTax.Domain
                                 FROM public.vehicle_tax a
                                 LEFT JOIN public.vehicle_type b ON b.id = a.vehicle_type_id
                                 LEFT JOIN public.vehicle_category c ON c.id = b.vehicle_category_id
+                                WHERE a.id <> 0
                                 {searchBy}
                                 ORDER BY {(string.IsNullOrWhiteSpace(sortBy) ? "a.vehicle_type_id ASC" : sortBy)}
                               ";
