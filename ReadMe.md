@@ -30,6 +30,40 @@ dotnet run --project VehicleTracker/VehicleTracker.csproj
 Create an account and link the account to your existing account tracker accounts
 
 
+#### How to Use Search And Sort on /api/Vehicle/TaxInformation/SearchSort
+
+Type in your Search or sort parameter into the searchBy{} or sortBy{}
+eg. searchBy {"typeName": "ambulance"}
+sortBy {"importDuty": "asc"}  (either "asc",ascending or "desc", descending)
+
+### List of Searchable Parametes
+- categoryDescription
+- typeName
+- typeDescription
+- categoryName
+- importduty"
+- vat
+- nhil,
+- getfundlevy,
+- aulevy
+- ecowaslevy
+- eximlevy
+- examlevy
+- processingfee
+- specialimportlevy
+
+### List of Sortable Parametes
+- importduty"
+- vat
+- nhil,
+- getfundlevy,
+- aulevy
+- ecowaslevy
+- eximlevy
+- examlevy
+- processingfee
+- specialimportlevy
+
 
 #### Relevant commands (must cd into project directory)
 Run Migrations
