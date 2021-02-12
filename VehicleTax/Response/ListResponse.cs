@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace VehicleTax.Response
+﻿namespace VehicleTax.Response
 {
     public class ListResponse<T>
     {

@@ -4,19 +4,13 @@ using VehicleTax.Services;
 using VehicleTax.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace VehicleTax
 {
@@ -37,17 +31,6 @@ namespace VehicleTax
                .AddOptions()
                .Configure<ConnectionStringSettings>(Configuration.GetSection("ConnectionStrings"));
 
-            services.AddDistributedMemoryCache();
-
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            services.AddSession(options =>
-            {
-                //options.IdleTimeout = TimeSpan.FromSeconds(10000);
-                options.Cookie.Name = "_tracker.Session";
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
-            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -59,7 +42,8 @@ namespace VehicleTax
             services.AddTransient<IVehicleRepository, VehicleRepository>();
             //services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
 
-            services.AddScoped<IVehicleTaxService, VehicleTaxService>();
+            services.AddScoped<IVehicleTaxHandler, VehicleTaxHandler>();
+            Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
         }
 
@@ -78,8 +62,6 @@ namespace VehicleTax
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

@@ -108,10 +108,10 @@ namespace VehicleTax.Domain
                 if (EndingBefore != null)
                 {
                     query = $@"SELECT
-                                  a.*,
+                                  a.id, a.vehicle_category_id, a.short_name, a.description,
                                     LEAD(a.id) OVER(ORDER BY a.id DESC) prev,
                                     FIRST_VALUE(a.id) OVER(ORDER BY a.id DESC) ""next""
-                                  FROM public.vehicle_tax a
+                                  FROM public.vehicle_type a
                                   WHERE a.id < @EndingBefore
                                   {(VehicleCategoryId is null ? string.Empty : "AND a.id = @VehicleCategoryId")}
                                   ORDER BY a.id desc {(Limit >= 0 ? "LIMIT @Limit" : "")}
@@ -124,7 +124,7 @@ namespace VehicleTax.Domain
                                   a.*,
                                     LEAD(a.id) OVER(ORDER BY a.id DESC) prev,
                                     FIRST_VALUE(a.id) OVER(ORDER BY a.id DESC) ""next""
-                                  FROM public.vehicle_tax a
+                                  FROM public.vehicle_type a
                                   WHERE a.id < @StartingAfter
                                   {(VehicleCategoryId is null ? string.Empty : "AND a.id = @VehicleCategoryId")}
                                   ORDER BY a.id desc {(Limit >= 0 ? "LIMIT @Limit" : "")}
@@ -138,7 +138,7 @@ namespace VehicleTax.Domain
                                   a.*,
                                     LEAD(a.id) OVER(ORDER BY a.id DESC) prev,
                                     null ""next""
-                                  FROM public.vehicle_tax a
+                                  FROM public.vehicle_type a
                                   {(VehicleCategoryId is null ? string.Empty : "AND a.id = @VehicleCategoryId")}
                                   ORDER BY a.id desc {(Limit >= 0 ? "LIMIT @Limit" : "")}
                                   

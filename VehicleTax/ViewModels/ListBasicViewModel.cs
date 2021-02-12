@@ -11,6 +11,7 @@ namespace VehicleTax.ViewModels
             EndingBefore = endingBefore;
             StartingAfter = startingAfter;
             Limit = limit;
+            VehicleCategoryId = vehicleCategoryId;
             Result = new ListBasicViewModelValidator().Validate(this);
         }
         public long? EndingBefore { get; }

@@ -7,7 +7,7 @@
         public double ImportDuty { get; set; }
         public double Vat { get; set; }
         public double Nhil { get; set; }
-        public double GetfundLevy { get; set; }
+        public double GetFundLevy { get; set; }
         public double AuLevy { get; set; }
         public double EcowasLevy { get; set; }
         public double EximLevy { get; set; }

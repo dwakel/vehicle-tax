@@ -6,7 +6,7 @@
         public long VehicleTypeId { get; set; }
         public string VehicleTypeName { get; set; }
         public string VehicleTypeDescription { get; set; }
-        public long vehicleCategoryId { get; set; }
+        public long VehicleCategoryId { get; set; }
         public string VehicleCategoryName { get; set; }
         public string VehicleCategoryDescription { get; set; }
         public double ImportDuty { get; set; }

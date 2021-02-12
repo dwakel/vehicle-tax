@@ -2,6 +2,8 @@
 
 Provides basic tax/duty information about types and categories of vehicles you can import into the country. Also calculates a vehicles import duty/tax. This is based on real information provided by the GRA Customs Ghana
 
+ACT 891 CUSTOMS ACT, 2015
+
 #### 🚀 Preriquisits
 - Docker
 - Internet connection

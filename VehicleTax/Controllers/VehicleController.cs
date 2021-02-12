@@ -15,22 +15,22 @@ namespace VehicleTax.Controllers
     public class VehicleController : ControllerBase
     {
         private readonly ILogger<VehicleController> _logger;
-        private readonly IVehicleTaxService _vehicleTaxService;
+        private readonly IVehicleTaxHandler _vehicleTaxHandler;
 
-        public VehicleController(ILogger<VehicleController> logger, IVehicleTaxService vehicleTaxService)
+        public VehicleController(ILogger<VehicleController> logger, IVehicleTaxHandler vehicleTaxHandler)
         {
             _logger = logger;
-            _vehicleTaxService = vehicleTaxService;
+            _vehicleTaxHandler = vehicleTaxHandler;
         }
 
 
-        [HttpGet("Categories")]
+        [HttpGet("VehicleCategories")]
         public async Task<ActionResult<ListResponse<VehicleCategoryModel>>> ListCategories(
             [FromQuery] long? EndingBefore = null,
             [FromQuery] long? StartingAfter = null,
             [FromQuery] int Limit = 10)
         {
-            Result<VehicleCategoryModel[]> res = await _vehicleTaxService.ListVehicleCategory(
+            Result<VehicleCategoryModel[]> res = await _vehicleTaxHandler.ListVehicleCategory(
                 new ListBasicViewModel(
                     endingBefore: EndingBefore,
                     startingAfter: StartingAfter,
@@ -51,17 +51,20 @@ namespace VehicleTax.Controllers
             return BadRequest(new { Error = res.Errors.FirstOrDefault() });
         }
 
-        [HttpGet("Types")]
+
+        [HttpGet("VehicleTypes")]
         public async Task<ActionResult<ListResponse<VehicleTypeModel>>> ListTypes(
             [FromQuery] long? EndingBefore = null,
             [FromQuery] long? StartingAfter = null,
+            [FromQuery] long? VehicleCategoryId = null,
             [FromQuery] int Limit = 10)
         {
-            Result<VehicleTypeModel[]> res = await _vehicleTaxService.ListVehicleType(
+            Result<VehicleTypeModel[]> res = await _vehicleTaxHandler.ListVehicleType(
                 new ListBasicViewModel(
                     endingBefore: EndingBefore,
                     startingAfter: StartingAfter,
-                    limit: Limit));
+                    limit: Limit,
+                    vehicleCategoryId: VehicleCategoryId));
 
             if (res.IsSuccess)
             {
@@ -79,13 +82,13 @@ namespace VehicleTax.Controllers
         }
 
 
-        [HttpGet("Tax")]
+        [HttpGet("TaxInformation")]
         public async Task<ActionResult<ListResponse<VehicleTaxModel>>> ListTax(
            [FromQuery] long? EndingBefore = null,
            [FromQuery] long? StartingAfter = null,
            [FromQuery] int Limit = 10)
         {
-            Result<VehicleTaxModel[]> res = await _vehicleTaxService.ListVehicleTax(
+            Result<VehicleTaxModel[]> res = await _vehicleTaxHandler.ListVehicleTax(
                 new ListBasicViewModel(
                     endingBefore: EndingBefore,
                     startingAfter: StartingAfter,
@@ -104,11 +107,13 @@ namespace VehicleTax.Controllers
 
             return BadRequest(new { Error = res.Errors.FirstOrDefault() });
         }
-        [HttpPost("Tax/SearchSort")]
+        
+
+        [HttpPost("TaxInformation/SearchSort")]
         public async Task<ActionResult<ListResponse<VehicleTaxDto>>> ListTax(
            [FromBody] SearchSortRequest searchSortRequest)
         {
-            Result<VehicleTaxDto[]> res = await _vehicleTaxService.ListVehicleTaxSearchSort(
+            Result<VehicleTaxDto[]> res = await _vehicleTaxHandler.ListVehicleTaxSearchSort(
             new BasicSearchSortViewModel(
                 searchBy: searchSortRequest.SearchBy,
                 sortBy: searchSortRequest.SortBy,
@@ -122,6 +127,23 @@ namespace VehicleTax.Controllers
                     Data = res.Value,
                     TotalRecords = res.Value.Length
                 };
+            }
+
+            return BadRequest(new { Error = res.Errors.FirstOrDefault() });
+        }
+
+        [HttpGet("VehicleType/{VehicleTypeId}/CalculateDuty")]
+        public async Task<ActionResult<double>> CalculateDuty(
+           [FromRoute] long VehicleTypeId,
+           [FromQuery] double CIF)
+        {
+            Result<double> res = await _vehicleTaxHandler.CalculateDuty(
+                new CalculateDutyViewModel(
+                    vehicleTypeId: VehicleTypeId,
+                    cIF: CIF));
+            if (res.IsSuccess)
+            {
+                return Ok(res.Value);
             }
 
             return BadRequest(new { Error = res.Errors.FirstOrDefault() });

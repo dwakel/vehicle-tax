@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
-using System;
 using System.Collections.Generic;
 
 namespace VehicleTax.ViewModels
@@ -9,11 +8,11 @@ namespace VehicleTax.ViewModels
     {
         public BasicSearchSortViewModel(Dictionary<string, object> searchBy, Dictionary<string, object> sortBy, int page = 0, int perPage = 0)
         {
-            Result = new BasicSearchSortViewModelValidator().Validate(this);
             SearchBy = searchBy;
             SortBy = sortBy;
             Page = page;
             PerPage = perPage;
+            Result = new BasicSearchSortViewModelValidator().Validate(this);
         }
         public Dictionary<string, object> SearchBy { get; }
         public Dictionary<string, object> SortBy { get; }
